@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+        <script src="js/fullpage.min.js"></script>
+        <style>
+            .section{
+                position: relative;
+                background-image: url("images/background.png");
+            }
+            .img-wrapper{
+                position: relative;
+                height: 100vh;
+            }
+            .section .cover{
+                position: absolute;
+                z-index: auto;
+                width: 100%;
+                vertical-align: center;
+            }
+            .cover.hidden{
+                display: none;
+            }
+            .arrow{
+                position: absolute;
+                margin: auto;
+                bottom: 20px;
+                width: 20px;
+                left: 0;
+                right: 0;
+                animation: scaling 1s infinite alternate;;
+            }
+            .entry{
+                position: absolute;
+                width: 100%;
+                z-index: 1;
+                bottom: 0;
+            }
+            .entry img{
+                width: 100%;
+            }
+            @keyframes scaling {
+                0% {
+                    transform: scale(1.0);
+                }
+                100% {
+                    transform: scale(1.5);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fullpage">
+            <div class="section">
+                <div class="img-wrapper">
+                    <img class="cover" src="images/page1.jpg" alt="">
+                    <img class="cover hidden" src="images/page1_1.jpg" alt="">
+                    <img class="arrow" src="images/down_arrow.png" alt="">
+                </div>
+            </div>
+            <div class="section">
+                <div class="img-wrapper">
+                    <img class="cover hidden" src="images/page2_1.jpg" alt="">
+                    <img class="cover" src="images/page2.jpg" alt="">
+                    <a href="/like" class="entry">
+                        <img class="entry" src="images/entry.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script>
+          new fullpage('#fullpage', {
+            continuousVertical: true
+          });
+
+          document.addEventListener('DOMContentLoaded', function() {
+            if(window.innerHeight/window.innerWidth > 1.9){
+              Array.prototype.forEach.call(document.getElementsByClassName('cover'),el => {
+                el.classList.toggle('hidden')
+              })
+            }
+          }, true);
+        </script>
+    </body>
+</html>

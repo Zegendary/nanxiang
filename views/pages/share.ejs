@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <%- include('../share/common') %>
+    <style>
+        .images {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .images > img{
+            width: 100%;
+        }
+        .button-wrapper{
+            border-radius: 10px;
+            padding-bottom: 20px;
+        }
+        .tips{
+            font-size: 12px;
+        }
+        .rank-wrapper{
+            margin-top: 16px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 16px 0;
+        }
+        .rank-wrapper h3{
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 20px;
+            padding: 0 16px;
+        }
+        ul>li{
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        ul>li.self{
+            background: #FFF3E0;
+        }
+        li img{
+            width: 12px;
+        }
+        li .rank{
+            margin-right: 6px;
+        }
+        #modal{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,.6);
+        }
+        #modal .share{
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            width: 128px;
+        }
+        #modal.hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="images/shoes.png" alt="">
+    <div class="content">
+        <div class="button-wrapper">
+            <div class="text">
+                <span>已获得点赞</span>
+                <img class="heart" src="images/heart.png" alt="">
+                <span class="number"><%= count %></span>
+            </div>
+            <div class="images">
+                <img id="share" class="share" src="images/invite_button.png" alt="">
+            </div>
+            <p class="tips">一个用户仅可点赞一次，可转发其他朋友帮您点赞</p>
+        </div>
+        <div class="rank-wrapper">
+            <h3>排行榜</h3>
+            <ul>
+                <li>
+                    <div class="phone">
+                        <img src="images/first.png" alt="">
+                        <span class="rank">
+                            1
+                        </span>
+                        15558195629
+                    </div>
+                    <div class="hearts">
+                        <img src="images/heart.png" alt="">
+                        30
+                    </div>
+                </li>
+                <li>
+                    <div class="phone">
+                        <img src="images/second.png" alt="">
+                        <span class="rank">
+                            2
+                        </span>
+                        15558195629
+                    </div>
+                    <div class="hearts">
+                        <img src="images/heart.png" alt="">
+                        28
+                    </div>
+                </li>
+                <li>
+                    <div class="phone">
+                        <img src="images/third.png" alt="">
+                        <span class="rank">
+                            3
+                        </span>
+                        15558195629
+                    </div>
+                    <div class="hearts">
+                        <img src="images/heart.png" alt="">
+                        26
+                    </div>
+                </li>
+                <li>
+                    <div class="phone">
+                        <span class="rank">
+                            4
+                        </span>
+                        15558195629
+                    </div>
+                    <div class="hearts">
+                        <img src="images/heart.png" alt="">
+                        24
+                    </div>
+                </li>
+                <li class="self">
+                    <div class="phone">
+                        <span class="rank">
+                            30
+                        </span>
+                        15558195629
+                    </div>
+                    <div class="hearts">
+                        <img src="images/heart.png" alt="">
+                        24
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="modal" class="hidden">
+    <img id="shareImg" class="share hidden" src="images/share.png" alt="">
+</div>
+<script>
+    const shareBtn = document.getElementById('share')
+    const shareImg = document.getElementById('shareImg')
+
+    shareBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden')
+      shareImg.classList.remove('hidden')
+    })
+    modal.addEventListener('click', () => {
+      modal.classList.add('hidden')
+      shareImg.classList.add('hidden')
+    })
+    modal.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    }, false);
+    modal.addEventListener('scroll', function(e) {
+      e.preventDefault();
+    }, false);
+</script>
+</body>
+</html>

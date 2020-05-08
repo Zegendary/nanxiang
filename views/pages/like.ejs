@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <%- include('../share/common') %>
+    <style>
+        .rules-wrapper{
+            position: absolute;
+            left: 0;
+            top: 22px;
+            background-color: #F5A623;
+            padding-bottom: 2px;
+            padding-right: 2px;
+        }
+        .rules-wrapper .rules{
+            background-color: #F4F1E3;
+            color: #472516;
+            border: 1px solid #000;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-left: none;
+        }
+        .rules-wrapper .line{
+            width: 98%;
+            background-color: #000;
+            height: 2px;
+        }
+        .images {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .images > img{
+             width: 40%;
+         }
+        .images > img.hidden{
+            display: none;
+        }
+        .content .banner{
+            width: 100%;
+        }
+
+        #modal{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,.4);
+        }
+        #modal #rulesModal{
+            width: 70%;
+            background: #452415;
+            margin: auto;
+            margin-top: 100px;
+            border-radius: 6px;
+            padding: 24px;
+            font-size: 12px;
+            line-height: 2;
+            color: #ffffff;
+        }
+
+        #modal #likeModal{
+            width: 70%;
+            background: #ffffff;
+            margin: auto;
+            margin-top: 140px;
+            border-radius: 6px;
+            padding: 12px;
+            padding-bottom: 40px;
+            font-size: 12px;
+            line-height: 2;
+            color: #333333;
+            text-align: center;
+        }
+
+        #modal .modal h3{
+            font-size: 15px;
+        }
+        #modal .modal .time{
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+        .img-wrapper{
+            text-align: right;
+        }
+        .img-wrapper .close{
+            width: 12px;
+        }
+        .img-wrapper #shoes{
+            width: 140px;
+        }
+        #modal.hidden{
+            display: none;
+        }
+        .modal.hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/shoes.png" alt="">
+        <div id="rule" class="rules-wrapper">
+            <div class="rules">活动规则</div>
+            <div class="line"></div>
+            <div class="background"></div>
+        </div>
+        <div class="content">
+            <div class="button-wrapper">
+                <div class="text">
+                    <span>好友已获得点赞</span>
+                    <img class="heart" src="images/heart.png" alt="">
+                    <span id="likeCount" class="number"><%= count %></span>
+                </div>
+                <div class="images">
+                    <img id="disabledLike" class="like hidden disabled" src="images/like_gray_button.png" alt="">
+                    <img id="like" class="like" src="images/like_button.png" alt="">
+                    <img id="join" class="join" src="images/join_button.png" alt="">
+                </div>
+            </div>
+            <img class="banner" src="images/nanxiang.png" alt="">
+        </div>
+    </div>
+    <div id="modal" class="hidden">
+        <div id="rulesModal" class="modal hidden">
+            <div class="img-wrapper">
+                <img id="closeRules" class="close" src="images/close.png" alt="">
+            </div>
+            <h3>活动规则</h3>
+            <div class="time">活动日期：2020.5.10-5.25</div>
+            <ul>
+                <li>1.参与活动分享集赞，即可获得排名机会；</li>
+                <li>2.力邀好友点赞，获赞排名前三的潮人可获“南翔馒头店x飞跃”联名款一双；</li>
+                <li>3.参与点赞的潮人即有一次抽奖机会，活动结束后会在留存的手机号中抽取五名获得联名款鞋，获奖潮人以电话联系为准，并在南翔馒头店公众号内公布。</li>
+            </ul>
+            <div class="img-wrapper">
+                <img id="shoes" src="images/shoes2.png" alt="">
+            </div>
+        </div>
+        <div id="likeModal" class="modal hidden">
+            <div class="img-wrapper">
+                <img id="closeLike" class="close" src="images/close_black.png" alt="">
+            </div>
+            <h3>恭喜你完成点赞助力</h3>
+            <div>你也可参与活动赢取潮鞋机会</div>
+        </div>
+        <%- include('../share/login') %>
+    </div>
+</body>
+<script>
+    const rule = document.getElementById('rule')
+    const rulesModal = document.getElementById('rulesModal')
+    const likeModal = document.getElementById('likeModal')
+    const closeRulesBtn = document.getElementById('closeRules')
+    const closeLikeBtn = document.getElementById('closeLike')
+    const like = document.getElementById('like')
+    const disabledLike = document.getElementById('disabledLike')
+    const loginModal = document.getElementById('loginModal')
+    const join = document.getElementById('join')
+    const likeCount = document.getElementById('likeCount')
+
+    rule.addEventListener('click',()=>{
+      modal.classList.remove('hidden')
+      rulesModal.classList.remove('hidden')
+    })
+    closeRulesBtn.addEventListener('click',()=>{
+      modal.classList.add('hidden')
+      rulesModal.classList.add('hidden')
+    })
+    like.addEventListener('click',() => {
+      const phone = localStorage.getItem('phone')
+      if(phone){
+        axios.post('/like',{
+          target: '<%= target %>',
+          creator: phone
+        }).then((res) => {
+          modal.classList.remove('hidden')
+          likeModal.classList.remove('hidden')
+          like.classList.add('hidden')
+          disabledLike.classList.remove('hidden')
+          likeCount.innerText = res.data.count
+        },(e) => {
+          window.alert(e.response.data)
+          like.classList.add('hidden')
+          disabledLike.classList.remove('hidden')
+        })
+      }else{
+        modal.classList.remove('hidden')
+        loginModal.classList.remove('hidden')
+      }
+    })
+    closeLikeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden')
+      likeModal.classList.add('hidden')
+    })
+
+    join.addEventListener('click', () => {
+      const phone = localStorage.getItem('phone')
+      if(phone){
+        window.location.href = `/share?creator=${phone}`
+      }else{
+        modal.classList.remove('hidden')
+        loginModal.classList.remove('hidden')
+      }
+    })
+</script>
+</html>
