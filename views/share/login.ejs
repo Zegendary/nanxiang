@@ -59,4 +59,9 @@
       window.alert('手机号码不正确')
     }
   })
+  phone.addEventListener('blur',() => {
+    window.setTimeout(()=>{
+      window.scrollTo(0, 0);
+    },100)
+  })
 </script>
