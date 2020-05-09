@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize')
 const {Like, Rank} = require('./db/models');
-const PORT = 5200
+const PORT = 5100
 
 let app = express();
 app.use(bodyParser.json());
