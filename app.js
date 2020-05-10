@@ -38,7 +38,7 @@ app.get('/share', async (req, res) => {
   })
   res.render('pages/share', {
     creator: req.query.creator,
-    rank: rank.dataValues,
+    rank: rank && rank.dataValues,
     ranks: result,
   });
 });
