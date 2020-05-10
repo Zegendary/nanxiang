@@ -49,7 +49,7 @@
             margin-right: 6px;
         }
         #modal{
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -62,7 +62,7 @@
             top: 10px;
             width: 128px;
         }
-        #modal.hidden{
+        #modal.hidden, #shareModal.hidden, #loginModal.hidden{
             display: none;
         }
     </style>
@@ -75,7 +75,7 @@
             <div class="text">
                 <span>已获得点赞</span>
                 <img class="heart" src="images/heart.png" alt="">
-                <span class="number"><%= rank.likeCount %></span>
+                <span class="number"><%= (rank && rank.likeCount) || 0  %></span>
             </div>
             <div class="images">
                 <img id="share" class="share" src="images/invite_button.png" alt="">
@@ -106,24 +106,35 @@
                         </div>
                     </li>
                 <%}) %>
+                <% if(biggerCount > 10) {%>
+                    <li class="self">
+                        <div class="phone">
+                            <span class="rank"><%= biggerCount %></span>
+                            <%= creator %>
+                        </div>
+                        <div class="hearts">
+                            <img src="images/heart.png" alt="">
+                            <%= rank.likeCount %>
+                        </div>
+                    </li>
+                <%}%>
             </ul>
         </div>
     </div>
 </div>
-<div id="modal" class="hidden">
-    <img id="shareImg" class="share hidden" src="images/share.png" alt="">
+<div id="modal" class="<%= !!creator? 'hidden': ''%>">
+    <div id="shareModal" class="hidden">
+        <img class="share" src="images/share.png" alt="">
+    </div>
+    <%- include('../share/login', {needLogin: !creator}) %>
 </div>
 <script>
     const shareBtn = document.getElementById('share')
-    const shareImg = document.getElementById('shareImg')
+    const shareModal = document.getElementById('shareModal')
 
     shareBtn.addEventListener('click', () => {
       modal.classList.remove('hidden')
-      shareImg.classList.remove('hidden')
-    })
-    modal.addEventListener('click', () => {
-      modal.classList.add('hidden')
-      shareImg.classList.add('hidden')
+      shareModal.classList.remove('hidden')
     })
     modal.addEventListener('touchmove', function(e) {
       e.preventDefault();

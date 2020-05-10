@@ -37,7 +37,7 @@
         color: #ffffff;
     }
 </style>
-<div id="loginModal" class="modal hidden">
+<div id="loginModal" class="modal <%= needLogin? '': 'hidden'%>">
     <h4>请填写您的手机号</h4>
     <p class="tips">中奖后我们会通过您预留的手机号联系您</p>
     <input id="phone" type="text">
@@ -55,6 +55,9 @@
       localStorage.setItem('phone',value)
       modal.classList.add('hidden')
       loginModal.classList.add('hidden')
+      if(/^\/share/.test(window.location.pathname)){
+        window.location.href = `/share?creator=${value}`
+      }
     }else{
       window.alert('手机号码不正确')
     }

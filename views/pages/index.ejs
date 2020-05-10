@@ -3,6 +3,7 @@
     <head>
         <%- include('../partials/head') %>
         <script src="js/fullpage.min.js"></script>
+
         <style>
             .section{
                 position: relative;
@@ -62,7 +63,7 @@
                 <div class="img-wrapper">
                     <img class="cover hidden" src="images/page2_1.jpg" alt="">
                     <img class="cover" src="images/page2.jpg" alt="">
-                    <a href="/like" class="entry">
+                    <a href="/share?creator=<%= creator %>" class="entry">
                         <img class="entry" src="images/entry.png" alt="">
                     </a>
                 </div>
@@ -70,7 +71,7 @@
         </div>
         <script>
           new fullpage('#fullpage', {
-            continuousVertical: true
+            continuousVertical: false
           });
 
           document.addEventListener('DOMContentLoaded', function() {

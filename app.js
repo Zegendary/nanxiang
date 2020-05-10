@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 
 app.get('/', function(req, res) {
-  res.render('pages/index');
+  res.render('pages/index',{creator: req.query.creator});
 });
 
 app.get('/like', async (req, res) => {
@@ -36,10 +36,18 @@ app.get('/share', async (req, res) => {
     limit: 10 ,
     order: [[Sequelize.col('likeCount'),'DESC']]
   })
+  const bigger = await Rank.findAndCountAll({
+    where: Sequelize.where(
+      Sequelize.literal('likeCount'),
+      '>',
+      (rank && rank.dataValues && rank.dataValues.likeCount) || 0
+    )
+  })
   res.render('pages/share', {
     creator: req.query.creator,
-    rank: rank && rank.dataValues,
+    rank: (rank && rank.dataValues) || {likeCount: 0, phone: req.query.creator},
     ranks: result,
+    biggerCount: bigger.count
   });
 });
 

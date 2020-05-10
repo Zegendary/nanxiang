@@ -145,7 +145,7 @@
             <h3>恭喜你完成点赞助力</h3>
             <div>你也可参与活动赢取潮鞋机会</div>
         </div>
-        <%- include('../share/login') %>
+        <%- include('../share/login', {needLogin: false}) %>
     </div>
 </body>
 <script>
@@ -198,7 +198,7 @@
     join.addEventListener('click', () => {
       const phone = localStorage.getItem('phone')
       if(phone){
-        window.location.href = `/share?creator=${phone}`
+        window.location.href = `/?creator=${phone}`
       }else{
         modal.classList.remove('hidden')
         loginModal.classList.remove('hidden')
