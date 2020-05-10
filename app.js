@@ -20,7 +20,7 @@ app.get('/', function(req, res) {
 
 app.get('/like', async (req, res) => {
   const rank = await Rank.findOne({
-    where: {phone: req.query.target}
+    where: {phone: req.query.target || 0}
   })
   res.render('pages/like', {
     target: req.query.target,
@@ -30,13 +30,12 @@ app.get('/like', async (req, res) => {
 
 app.get('/share', async (req, res) => {
   const rank = await Rank.findOne({
-    where: {phone: req.query.creator}
+    where: {phone: req.query.creator || 0}
   })
   const result = await Rank.findAll({
     limit: 10 ,
     order: [[Sequelize.col('likeCount'),'DESC']]
   })
-  console.log(result)
   res.render('pages/share', {
     creator: req.query.creator,
     rank: rank.dataValues,
