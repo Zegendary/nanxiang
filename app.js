@@ -19,9 +19,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/like', async (req, res) => {
-  const rank = await Rank.findOne({
-    where: {phone: req.query.target || 0}
-  })
+  let rank = null
+  if(req.query.target){
+    rank = await Rank.findOne({
+      where: {phone: req.query.target}
+    })
+  }
   res.render('pages/like', {
     target: req.query.target,
     count: rank && rank.dataValues && rank.dataValues.likeCount
@@ -51,11 +54,18 @@ app.get('/share', async (req, res) => {
   });
 });
 
+app.get('/api/rank', async (req, res) => {
+  const result = await Rank.findAll({
+    limit: 10 ,
+    order: [[Sequelize.col('likeCount'),'DESC']]
+  })
+  res.send(result);
+})
+
 app.post('/like', async (req, res) => {
   const likes = await Like.findAll({
     where: {target: req.body.target, creator: req.body.creator}
   })
-
   if(likes.length === 0){
     try{
       await Like.create({target: req.body.target, creator: req.body.creator})
@@ -63,9 +73,7 @@ app.post('/like', async (req, res) => {
         where: {phone: req.body.target}
       })
       if (rank && rank.dataValues && rank.dataValues.id) {
-        Rank.update({likeCount: rank.dataValues.likeCount++},{
-          where: {phone: req.body.target}
-        })
+        await rank.update({likeCount: rank.dataValues.likeCount + 1})
         res.send({count: rank.dataValues.likeCount})
       }else{
         Rank.create({phone: req.body.target})

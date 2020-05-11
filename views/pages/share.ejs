@@ -25,11 +25,20 @@
             border-radius: 10px;
             padding: 16px 0;
         }
-        .rank-wrapper h3{
-            color: #333;
-            margin-bottom: 16px;
-            font-size: 20px;
+        .rank-wrapper .title{
+            display: flex;
             padding: 0 16px;
+            margin-bottom: 16px;
+            align-items: baseline;
+        }
+        .title .name{
+            color: #333;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .title .desc{
+            font-size: 12px;
+            color: #666666;
         }
         ul>li{
             padding: 12px 16px;
@@ -62,7 +71,7 @@
             top: 10px;
             width: 128px;
         }
-        #modal.hidden, #shareModal.hidden, #loginModal.hidden{
+        #modal.hidden, #rulesModal.hidden, #shareModal.hidden, #loginModal.hidden{
             display: none;
         }
     </style>
@@ -70,6 +79,11 @@
 <body>
 <div class="container">
     <img src="images/shoes.png" alt="">
+    <div id="rule" class="rules-wrapper">
+        <div class="rules">活动规则</div>
+        <div class="line"></div>
+        <div class="background"></div>
+    </div>
     <div class="content">
         <div class="button-wrapper">
             <div class="text">
@@ -83,7 +97,10 @@
             <p class="tips">一个用户仅可点赞一次，可转发其他朋友帮您点赞</p>
         </div>
         <div class="rank-wrapper">
-            <h3>排行榜</h3>
+            <div class="title">
+                <span class="name">排行榜</span>
+                <span class="desc">仅显示点赞排名前十位用户</span>
+            </div>
             <ul>
                 <% ranks.map((rank,index)=>{%>
                     <li class="<%= rank.phone === creator? "self" : ""%>">
@@ -98,7 +115,7 @@
                                 <img src="images/third.png" alt="">
                             <% } %>
                             <span class="rank"><%= index + 1 %></span>
-                            <%= rank.phone %>
+                            <%= rank.phone.substr(0,3)+"****"+rank.phone.substr(7) %>
                         </div>
                         <div class="hearts">
                             <img src="images/heart.png" alt="">
@@ -126,12 +143,24 @@
     <div id="shareModal" class="hidden">
         <img class="share" src="images/share.png" alt="">
     </div>
+    <%- include('../share/rules') %>
     <%- include('../share/login', {needLogin: !creator}) %>
 </div>
 <script>
     const shareBtn = document.getElementById('share')
     const shareModal = document.getElementById('shareModal')
+    const rule = document.getElementById('rule')
+    const rulesModal = document.getElementById('rulesModal')
+    const closeRulesBtn = document.getElementById('closeRules')
 
+    rule.addEventListener('click',()=>{
+      modal.classList.remove('hidden')
+      rulesModal.classList.remove('hidden')
+    })
+    closeRulesBtn.addEventListener('click',()=>{
+      modal.classList.add('hidden')
+      rulesModal.classList.add('hidden')
+    })
     shareBtn.addEventListener('click', () => {
       modal.classList.remove('hidden')
       shareModal.classList.remove('hidden')
