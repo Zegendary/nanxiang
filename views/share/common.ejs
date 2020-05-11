@@ -51,8 +51,8 @@
     const shareModal = document.getElementById('shareModal')
     const modal = document.getElementById('modal')
 
-    modal && modal.classList && modal.classList.remove('hidden')
-    shareModal&& shareModal.classList && shareModal.classList.remove('hidden')
+    modal && modal.classList && modal.classList.add('hidden')
+    shareModal&& shareModal.classList && shareModal.classList.add('hidden')
   }
   axios.get(`https://g-workshop.com.cn/wechat/jsconfig?url=${window.location.href}`).then(response =>{
     wx.config({
