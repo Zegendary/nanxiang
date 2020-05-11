@@ -29,23 +29,53 @@
                 width: 20px;
                 left: 0;
                 right: 0;
-                animation: scaling 1s infinite alternate;;
+                animation: move 1s infinite alternate;
             }
             .entry{
                 position: absolute;
                 width: 100%;
                 z-index: 1;
                 bottom: 0;
+                animation: scaling 0.6s infinite alternate;
+            }
+            .nanxiang{
+                position: absolute;
+                width: 60%;
+                z-index: 1;
+                top: 20vw;
+                padding-left: 20px;
+                transform: translateX(-120%);
+                transition: all 0.5s linear;
+            }
+            .nanxiang.in{
+                transform: translateX(0);
+            }
+            .nanxiang img{
+                width: 100%;
             }
             .entry img{
                 width: 100%;
             }
-            @keyframes scaling {
+            @keyframes move {
                 0% {
-                    transform: scale(1.0);
+                    transform: translateY(-5px);
+                }
+                0% {
+                    transform: translateY(0);
                 }
                 100% {
-                    transform: scale(1.5);
+                    transform: translateY(5px);
+                }
+            }
+            @keyframes scaling {
+                0% {
+                    transform: scale(0.99);
+                }
+                0% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(1.02);
                 }
             }
         </style>
@@ -61,8 +91,11 @@
             </div>
             <div class="section">
                 <div class="img-wrapper">
-                    <img class="cover hidden" src="images/page2_1.jpg" alt="">
-                    <img class="cover" src="images/page2.jpg" alt="">
+                    <img class="cover hidden" src="images/page2_2.jpg" alt="">
+                    <img class="cover" src="images/page2_2.jpg" alt="">
+                    <div id="mantou" class="nanxiang">
+                        <img src="images/mantou.png" alt="">
+                    </div>
                     <a href="/share?creator=<%= creator %>" class="entry">
                         <img class="entry" src="images/entry.png" alt="">
                     </a>
@@ -70,8 +103,18 @@
             </div>
         </div>
         <script>
+          var mantou = document.getElementById('mantou')
           new fullpage('#fullpage', {
-            continuousVertical: false
+            continuousVertical: false,
+            onLeave: function(origin){
+              //使用 index
+              if(origin.index == 0){
+                mantou.classList.add('in')
+              }
+              if(origin.index == 1){
+                mantou.classList.remove('in')
+              }
+            }
           });
 
           document.addEventListener('DOMContentLoaded', function() {
