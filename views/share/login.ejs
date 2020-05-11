@@ -57,6 +57,8 @@
       loginModal.classList.add('hidden')
       if(/^\/share/.test(window.location.pathname)){
         window.location.href = `/share?creator=${value}`
+      }else {
+        window.location.reload()
       }
     }else{
       window.alert('手机号码不正确')
