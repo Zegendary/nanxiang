@@ -49,6 +49,7 @@
   var shareTitle = '国潮跨界 | 南翔馒头店X大孚飞跃';
   function closeModal(){}
   axios.get(`https://g-workshop.com.cn/wechat/jsconfig?url=${window.location.href}`).then(response =>{
+    if(!target){return}
     wx.config({
       appId: response.data.appId,
       url: response.data.url,
