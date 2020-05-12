@@ -28,6 +28,34 @@
                 right: 0;
                 animation: move 1s infinite alternate;
             }
+            .text1{
+                position: absolute;
+                width: 80%;
+                z-index: 1;
+                top: 43vh;
+                right: 0;
+                transform: translateX(100%);
+                transition: all 0.5s linear;
+                transition-delay: .5s
+            }
+            .text1.in{
+                transform: translateX(0);
+            }
+            .text2{
+                position: absolute;
+                width: 63%;
+                z-index: 1;
+                top: 10vh;
+                transform: translateX(-100%);
+                transition: all 0.5s linear;
+                transition-delay: .5s
+            }
+            .text2.in{
+                transform: translateX(0);
+            }
+            .nanxiang img{
+                width: 100%;
+            }
             .entry{
                 position: absolute;
                 width: 100%;
@@ -51,12 +79,14 @@
             <div class="section">
                 <div class="img-wrapper">
                     <img class="cover" src="images/02.png" alt="">
+                    <img id="text1" class="text1" src="images/text1.png" alt="">
                     <img class="arrow" src="images/down_arrow.png" alt="">
                 </div>
             </div>
             <div class="section">
                 <div class="img-wrapper">
                     <img class="cover" src="images/03.png" alt="">
+                    <img id="text2" class="text2" src="images/text2.png" alt="">
                     <a href="/share?creator=<%= creator %>" class="entry">
                         <img class="entry" src="images/entry.png" alt="">
                     </a>
@@ -65,8 +95,25 @@
         </div>
         <%- include('../share/music') %>
         <script>
+          var text1 = document.getElementById('text1')
+          var text2 = document.getElementById('text2')
           new fullpage('#fullpage', {
             continuousVertical: false,
+            onLeave: function(origin){
+              //使用 index
+              if(origin.index == 0){
+                text1.classList.add('in')
+                text2.classList.remove('in')
+              }
+              if(origin.index == 1){
+                text2.classList.add('in')
+                text1.classList.remove('in')
+              }
+              if(origin.index == 2){
+                text1.classList.add('in')
+                text2.classList.remove('in')
+              }
+            }
           });
 
         </script>
