@@ -54,6 +54,15 @@ app.get('/share', async (req, res) => {
   });
 });
 
+app.get('/check', async (req, res) => {
+  const rank = await Rank.findOne({
+    where: {phone: req.query.creator || 0}
+  })
+  res.send({
+    rank: (rank && rank.dataValues) || {likeCount: 0},
+  })
+});
+
 app.get('/api/rank', async (req, res) => {
   const result = await Rank.findAll({
     limit: 10 ,
