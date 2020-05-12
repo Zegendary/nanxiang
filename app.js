@@ -58,7 +58,7 @@ app.get('/check', async (req, res) => {
   const rank = await Rank.findOne({
     where: {phone: req.query.creator || 0}
   })
-  res.send({likeCount: (rank && rank.ddataValues && rank.dataValues.likeCount) || 0})
+  res.send({likeCount: (rank && rank.dataValues && rank.dataValues.likeCount) || 0})
 });
 
 app.get('/api/rank', async (req, res) => {
