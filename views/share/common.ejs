@@ -47,13 +47,7 @@
   var lineLink = `http://yuyuan.toattack.com/like?target=${target}`;
   var descContent = '南翔馒头店联手大孚飞跃开启120周年，点赞赢限量版定制鞋';
   var shareTitle = '国潮跨界 | 南翔馒头店X大孚飞跃';
-  function closeModal(){
-    const shareModal = document.getElementById('shareModal')
-    const modal = document.getElementById('modal')
-
-    modal && modal.classList && modal.classList.add('hidden')
-    shareModal&& shareModal.classList && shareModal.classList.add('hidden')
-  }
+  function closeModal(){}
   axios.get(`https://g-workshop.com.cn/wechat/jsconfig?url=${window.location.href}`).then(response =>{
     wx.config({
       appId: response.data.appId,
@@ -64,6 +58,8 @@
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'updateTimelineShareData', 'updateAppMessageShareData']
     });
     wx.ready(() => {
+      const Audio = document.getElementById('audio')
+      Audio.play()
       wx.updateTimelineShareData({
         title: shareTitle,
         link: lineLink,

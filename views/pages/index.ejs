@@ -3,7 +3,7 @@
     <head>
         <%- include('../partials/head') %>
         <script src="js/fullpage.min.js"></script>
-
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
         <style>
             .section{
                 position: relative;
@@ -18,9 +18,6 @@
                 z-index: auto;
                 width: 100%;
                 vertical-align: center;
-            }
-            .cover.hidden{
-                display: none;
             }
             .arrow{
                 position: absolute;
@@ -38,46 +35,8 @@
                 bottom: 0;
                 animation: scaling 0.6s infinite alternate;
             }
-            .nanxiang{
-                position: absolute;
-                width: 60%;
-                z-index: 1;
-                top: 34vw;
-                padding-left: 20px;
-                transform: translateX(-120%);
-                transition: all 0.5s linear;
-                transition-delay: 1s
-            }
-            .nanxiang.in{
-                transform: translateX(0);
-            }
-            .nanxiang img{
-                width: 100%;
-            }
             .entry img{
                 width: 100%;
-            }
-            @keyframes move {
-                0% {
-                    transform: translateY(-5px);
-                }
-                0% {
-                    transform: translateY(0);
-                }
-                100% {
-                    transform: translateY(5px);
-                }
-            }
-            @keyframes scaling {
-                0% {
-                    transform: scale(0.99);
-                }
-                0% {
-                    transform: scale(1);
-                }
-                100% {
-                    transform: scale(1.02);
-                }
             }
         </style>
     </head>
@@ -85,46 +44,31 @@
         <div id="fullpage">
             <div class="section">
                 <div class="img-wrapper">
-                    <img class="cover" src="images/page1.jpg" alt="">
-                    <img class="cover hidden" src="images/page1_1.jpg" alt="">
+                    <img class="cover" src="images/01.png" alt="">
                     <img class="arrow" src="images/down_arrow.png" alt="">
                 </div>
             </div>
             <div class="section">
                 <div class="img-wrapper">
-                    <img class="cover hidden" src="images/page2_2.jpg" alt="">
-                    <img class="cover" src="images/page2_2.jpg" alt="">
-                    <div id="mantou" class="nanxiang">
-                        <img src="images/mantou.png" alt="">
-                    </div>
+                    <img class="cover" src="images/02.png" alt="">
+                    <img class="arrow" src="images/down_arrow.png" alt="">
+                </div>
+            </div>
+            <div class="section">
+                <div class="img-wrapper">
+                    <img class="cover" src="images/03.png" alt="">
                     <a href="/share?creator=<%= creator %>" class="entry">
                         <img class="entry" src="images/entry.png" alt="">
                     </a>
                 </div>
             </div>
         </div>
+        <%- include('../share/music') %>
         <script>
-          var mantou = document.getElementById('mantou')
           new fullpage('#fullpage', {
             continuousVertical: false,
-            onLeave: function(origin){
-              //使用 index
-              if(origin.index == 0){
-                mantou.classList.add('in')
-              }
-              if(origin.index == 1){
-                mantou.classList.remove('in')
-              }
-            }
           });
 
-          document.addEventListener('DOMContentLoaded', function() {
-            if(window.innerHeight/window.innerWidth > 1.9){
-              Array.prototype.forEach.call(document.getElementsByClassName('cover'),el => {
-                el.classList.toggle('hidden')
-              })
-            }
-          }, true);
         </script>
     </body>
 </html>
