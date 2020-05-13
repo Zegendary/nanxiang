@@ -61,6 +61,10 @@ app.get('/check', async (req, res) => {
   res.send({likeCount: (rank && rank.dataValues && rank.dataValues.likeCount) || 0})
 });
 
+app.get('/logout', async (req, res) => {
+  res.render('pages/logout');
+});
+
 app.get('/api/rank', async (req, res) => {
   const result = await Rank.findAll({
     limit: 10 ,
