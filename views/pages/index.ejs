@@ -87,9 +87,9 @@
                 <div class="img-wrapper">
                     <img class="cover" src="images/03.png" alt="">
                     <img id="text2" class="text2" src="images/text2.png" alt="">
-                    <a href="/share?creator=<%= creator %>" class="entry">
+                    <div id="shareLink" class="entry">
                         <img class="entry" src="images/entry.png" alt="">
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,6 +97,11 @@
         <script>
           var text1 = document.getElementById('text1')
           var text2 = document.getElementById('text2')
+          var shareLink = document.getElementById('shareLink')
+          const phone = localStorage.getItem('phone')
+          shareLink.addEventListener('click',() => {
+            window.location.href = `/share?creator=${phone}`
+          })
           new fullpage('#fullpage', {
             continuousVertical: false,
             onLeave: function(origin){
