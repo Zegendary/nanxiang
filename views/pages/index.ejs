@@ -100,7 +100,7 @@
           var shareLink = document.getElementById('shareLink')
           const phone = localStorage.getItem('phone')
           shareLink.addEventListener('click',() => {
-            window.location.href = `/share?creator=${phone}`
+            window.location.href = `/share?creator=${phone || ""}`
           })
           new fullpage('#fullpage', {
             continuousVertical: false,
